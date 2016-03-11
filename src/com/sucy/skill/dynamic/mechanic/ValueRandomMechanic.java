@@ -1,6 +1,6 @@
 /**
  * SkillAPI
- * com.sucy.skill.dynamic.mechanic.SoundMechanic
+ * com.sucy.skill.dynamic.mechanic.ValueSetMechanic
  *
  * The MIT License (MIT)
  *
@@ -26,22 +26,22 @@
  */
 package com.sucy.skill.dynamic.mechanic;
 
+import com.sucy.skill.dynamic.DynamicSkill;
 import com.sucy.skill.dynamic.EffectComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
- * Plays a particle effect
+ * Adds to a cast data value
  */
-public class SoundMechanic extends EffectComponent
+public class ValueRandomMechanic extends EffectComponent
 {
-    private static final String SOUND  = "sound";
-    private static final String SOUND2 = "newsound";
-    private static final String VOLUME = "volume";
-    private static final String PITCH  = "pitch";
+    private static final String KEY  = "key";
+    private static final String TYPE = "type";
+    private static final String MIN  = "min";
+    private static final String MAX  = "min";
 
     /**
      * Executes the component
@@ -55,31 +55,20 @@ public class SoundMechanic extends EffectComponent
     @Override
     public boolean execute(LivingEntity caster, int level, List<LivingEntity> targets)
     {
-        if (targets.size() == 0)
+        if (targets.size() == 0 || !settings.has(KEY))
         {
             return false;
         }
 
-        String type = settings.getString(SOUND, settings.getString(SOUND2, "")).toUpperCase().replace(" ", "_");
-        try
-        {
-            Sound sound = Sound.valueOf(type);
-            float volume = (float) attr(caster, VOLUME, level, 100.0, true) / 100;
-            float pitch = (float) attr(caster, PITCH, level, 0.0, true);
+        boolean isSelf = targets.size() == 1 && targets.get(0) == caster;
+        String key = settings.getString(KEY);
+        boolean triangular = settings.getString(TYPE).toUpperCase().equals("triangular");
+        double min = attr(caster, MIN, level, 1, isSelf);
+        double max = attr(caster, MAX, level, 1, isSelf);
 
-            volume = Math.max(0, volume);
-            pitch = Math.min(2, Math.max(0.5f, pitch));
-
-            for (LivingEntity target : targets)
-            {
-                target.getWorld().playSound(target.getLocation(), sound, volume, pitch);
-            }
-            return targets.size() > 0;
-        }
-        catch (Exception ex)
-        {
-            Bukkit.getLogger().info("Invalid sound type: " + type);
-            return false;
-        }
+        HashMap<String, Object> data = DynamicSkill.getCastData(caster);
+        double rand = triangular ? 0.5 * (Math.random() + Math.random()) : Math.random();
+        data.put(key, rand * (max - min) + min);
+        return true;
     }
 }
