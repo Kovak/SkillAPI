@@ -33,10 +33,13 @@ import com.sucy.skill.api.player.PlayerData;
 import com.sucy.skill.language.ErrorNodes;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -110,13 +113,64 @@ public class InventoryTask extends BukkitRunnable
      *
      * @return true if cannot use, false otherwise
      */
+
+    public static List<Material> itemsThatCanUse = new ArrayList<Material>(Arrays.asList(
+            Material.DIAMOND_AXE,
+            Material.DIAMOND_BOOTS,
+            Material.DIAMOND_HELMET,
+            Material.DIAMOND_CHESTPLATE,
+            Material.DIAMOND_LEGGINGS,
+            Material.DIAMOND_PICKAXE,
+            Material.DIAMOND_SWORD,
+            Material.DIAMOND_SPADE,
+            Material.DIAMOND_HOE,
+            Material.WOOD_AXE,
+            Material.WOOD_PICKAXE,
+            Material.WOOD_SWORD,
+            Material.WOOD_SPADE,
+            Material.WOOD_HOE,
+            Material.IRON_AXE,
+            Material.LEATHER_BOOTS,
+            Material.LEATHER_HELMET,
+            Material.LEATHER_CHESTPLATE,
+            Material.LEATHER_LEGGINGS,
+            Material.IRON_BOOTS,
+            Material.IRON_HELMET,
+            Material.IRON_CHESTPLATE,
+            Material.IRON_LEGGINGS,
+            Material.IRON_PICKAXE,
+            Material.IRON_SWORD,
+            Material.IRON_SPADE,
+            Material.IRON_HOE,
+            Material.STONE_AXE,
+            Material.STONE_PICKAXE,
+            Material.STONE_SWORD,
+            Material.STONE_SPADE,
+            Material.STONE_HOE,
+            Material.GOLD_AXE,
+            Material.GOLD_BOOTS,
+            Material.GOLD_HELMET,
+            Material.GOLD_CHESTPLATE,
+            Material.GOLD_LEGGINGS,
+            Material.GOLD_PICKAXE,
+            Material.GOLD_SWORD,
+            Material.GOLD_SPADE,
+            Material.GOLD_HOE,
+            Material.CHAINMAIL_BOOTS,
+            Material.CHAINMAIL_CHESTPLATE,
+            Material.CHAINMAIL_HELMET,
+            Material.CHAINMAIL_LEGGINGS,
+            Material.BOW
+        ));
+
     public static boolean cannotUse(PlayerData player, ItemStack item)
     {
         if (plugin == null) return false;
         if (item == null) return false;
+        if (!itemsThatCanUse.contains(item.getType())) return false;
         boolean hasRequirement = false;
         boolean needsRequirement = false;
-        if (item.hasItemMeta() && item.getItemMeta().hasLore())
+        if (item.getItemMeta().hasLore())
         {
             List<String> lore = item.getItemMeta().getLore();
 

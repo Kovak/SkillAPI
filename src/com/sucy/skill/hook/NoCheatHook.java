@@ -26,7 +26,7 @@
  */
 package com.sucy.skill.hook;
 
-import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
+//import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 import org.bukkit.entity.Player;
 
 /**
@@ -40,7 +40,7 @@ public class NoCheatHook
      * @param player player to exempt
      */
     public static void exempt(Player player) {
-        NCPExemptionManager.exemptPermanently(player);
+//        NCPExemptionManager.exemptPermanently(player);
     }
 
     /**
@@ -49,6 +49,6 @@ public class NoCheatHook
      * @param player player to unexempt
      */
     public static void unexempt(Player player) {
-        NCPExemptionManager.unexempt(player);
+//        NCPExemptionManager.unexempt(player);
     }
 }

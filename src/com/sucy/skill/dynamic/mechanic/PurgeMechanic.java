@@ -64,7 +64,7 @@ public class PurgeMechanic extends EffectComponent
     {
         boolean worked = false;
         String status = settings.getString(STATUS, "None").toLowerCase();
-        String potion = settings.getString(POTION).toUpperCase().replace(' ', '_');
+        String potion = settings.getString(POTION).toLowerCase().replace(' ', '_');
         PotionEffectType type = null;
         try
         {

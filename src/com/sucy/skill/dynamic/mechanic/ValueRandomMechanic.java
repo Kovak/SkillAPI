@@ -41,7 +41,7 @@ public class ValueRandomMechanic extends EffectComponent
     private static final String KEY  = "key";
     private static final String TYPE = "type";
     private static final String MIN  = "min";
-    private static final String MAX  = "min";
+    private static final String MAX  = "max";
 
     /**
      * Executes the component
@@ -62,7 +62,7 @@ public class ValueRandomMechanic extends EffectComponent
 
         boolean isSelf = targets.size() == 1 && targets.get(0) == caster;
         String key = settings.getString(KEY);
-        boolean triangular = settings.getString(TYPE).toUpperCase().equals("triangular");
+        boolean triangular = settings.getString(TYPE).toUpperCase().equals("TRIANGULAR");
         double min = attr(caster, MIN, level, 1, isSelf);
         double max = attr(caster, MAX, level, 1, isSelf);
 
